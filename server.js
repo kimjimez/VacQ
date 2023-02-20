@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cookieParser = require('cookie-parser');
 const connectDB = require("./config/db.js");
 
 //load env vars
@@ -10,6 +11,7 @@ connectDB();
 
 //Route files
 const hospitals = require("./routes/hospitals");
+const auth = require("./routes/auth");
 const { Promise } = require("mongoose");
 
 const app = express();
@@ -19,6 +21,7 @@ app.use(express.json());
 
 //Mount routers
 app.use("/api/v1/hospitals", hospitals);
+app.use("/api/v1/auth", auth);
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(

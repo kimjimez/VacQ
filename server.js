@@ -12,16 +12,20 @@ connectDB();
 //Route files
 const hospitals = require("./routes/hospitals");
 const auth = require("./routes/auth");
+const appointments = require("./routes/appointments");
 const { Promise } = require("mongoose");
 
 const app = express();
 
 //add body parser
 app.use(express.json());
+//cookie parser
+app.use(cookieParser());
 
 //Mount routers
 app.use("/api/v1/hospitals", hospitals);
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/appointments", appointments);
 
 const PORT = process.env.PORT || 3000;
 const server = app.listen(

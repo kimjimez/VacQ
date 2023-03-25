@@ -28,9 +28,13 @@ exports.getAppointments = async (req,res,next) => {
         });
     } catch (error) {
         console.log(error);
+<<<<<<< HEAD
         return res.status(500).json({
             success: false
             , message: "Cannot find Appointment"})
+=======
+        return res.status(500).json({success: false, message: "Cannot find Appointment"})
+>>>>>>> 5545f80 (add VacCenter API)
     }
 };
 
@@ -45,9 +49,13 @@ exports.getAppointment = async (req,res,next) => {
         });
 
         if(!appointment) {
+<<<<<<< HEAD
             return res.status(404).json({
                 success:false
                 , message: `No appointment with the id of ${req.params.id}`});
+=======
+            return res.status(404).json({success:false, message: `No appointment with the id of ${req.params.id}`});
+>>>>>>> 5545f80 (add VacCenter API)
         }
 
         res.status(200).json({
@@ -56,9 +64,13 @@ exports.getAppointment = async (req,res,next) => {
         });
     } catch (error) {
         console.log(error);
+<<<<<<< HEAD
         return res.status(500).json({
             success: false
             , message:"Cannot find Appointment"});
+=======
+        return res.status(500).json({success: false, message:"Cannot find Appointment"});
+>>>>>>> 5545f80 (add VacCenter API)
     }
 };
 
@@ -70,9 +82,13 @@ exports.addAppointment = async (req,res,next) => {
         req.body.hospital = req.params.hospitalId;
         const hospital = await Hospital.findById(req.params.hospitalId);
         if(!hospital) {
+<<<<<<< HEAD
             return res.status(404).json({
                 success: false
                 , message: `No hospital with the id of ${req.params.hospitalId}`});
+=======
+            return res.status(404).json({success: false, message: `No hospital with the id of ${req.params.hospitalId}`});
+>>>>>>> 5545f80 (add VacCenter API)
         }
         //add user Id to req.body
         req.body.user = req.user.id;
@@ -80,9 +96,13 @@ exports.addAppointment = async (req,res,next) => {
         const existedAppointments = await Appointment.find({user:req.user.id});
         //If the user is not an admin, they can only create 3 appointment.
         if(existedAppointments.length>=3 && req.user.role !== 'admin') {
+<<<<<<< HEAD
             return res.status(400).json({
                 success: false
                 , message: `The user with ID ${req.user.id} has already made 3 appointments`});
+=======
+            return res.status(400).json({success: false, message: `The user with ID ${req.user.id} has already made 3 appointments`});
+>>>>>>> 5545f80 (add VacCenter API)
         }
         const appointment = await Appointment.create(req.body);
         res.status(200).json({
@@ -91,9 +111,13 @@ exports.addAppointment = async (req,res,next) => {
         });
     } catch (error) {
         console.log(error);
+<<<<<<< HEAD
         return res.status(500).json({
             success: false
             , message: "Cannot create Appointment"});
+=======
+        return res.status(500).json({success: false, message: "Cannot create Appointment"});
+>>>>>>> 5545f80 (add VacCenter API)
     }
 };
 
@@ -104,6 +128,7 @@ exports.updateAppointment = async (req,res,next) => {
     try {
         let appointment = await Appointment.findById(req.params.id);
         if(!appointment) {
+<<<<<<< HEAD
             return res.status(404).json({
                 success: false
                 , message: `No appointment with the id of ${req.params.id}`});
@@ -113,6 +138,13 @@ exports.updateAppointment = async (req,res,next) => {
             return res.status(401).json({
                 success: false
                 , message: `User ${req.user.id} is not authorized to update this appointment`});
+=======
+            return res.status(404).json({success: false, message: `No appointment with the id of ${req.params.id}`});
+        }
+        //Make sure user is the appointment owner
+        if (appointment.user.toString()!==req.user.id && req.user.role !== 'admin') {
+            return res.status(401).json({success: false, message: `User ${req.user.id} is not authorized to update this appointment`});
+>>>>>>> 5545f80 (add VacCenter API)
         }
         appointment = await Appointment.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
@@ -124,9 +156,13 @@ exports.updateAppointment = async (req,res,next) => {
         });
     } catch (error) {
         console.log(error);
+<<<<<<< HEAD
         return res.status(500).json({
             success: false
             , message: "Cannot update Appointment"});
+=======
+        return res.status(500).json({success: false, message: "Cannot update Appointment"});
+>>>>>>> 5545f80 (add VacCenter API)
     }
 }
 
@@ -137,6 +173,7 @@ exports.deleteAppointment = async (req,res,next) => {
     try {
         const appointment = await Appointment.findById(req.params.id);
         if(!appointment) {
+<<<<<<< HEAD
             return res.status(404).json({
                 success: false
                 , message: `No appointment with the id of ${req.params.id}`});
@@ -149,14 +186,27 @@ exports.deleteAppointment = async (req,res,next) => {
         }
         await appointment.remove();
 
+=======
+            return res.status(404).json({success: false, message: `No appointment with the id of ${req.params.id}`});
+        }
+        //Make sure user is the appointment owner
+        if (appointment.user.toString()!==req.user.id && req.user.role !== 'admin') {
+            return res.status(401).json({success: false, message: `User ${req.user.id} is not authorized to delete this appointment`});
+        }
+        await appointment.remove();
+>>>>>>> 5545f80 (add VacCenter API)
         res.status(200).json({
             success: true,
             data: {}
         });
     } catch (error) {
         console.log(error);
+<<<<<<< HEAD
         return res.status(500).json({
             success: false
             , message: 'Cannot delete Appointment'});
+=======
+        return res.status(500).json({success: false, message: "Cannot delete Appointment"});
+>>>>>>> 5545f80 (add VacCenter API)
     }
 };

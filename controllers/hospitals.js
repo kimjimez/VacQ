@@ -4,13 +4,6 @@ const VacCenter = require("../models/VacCenter");
 //@desc     Get all hospitals
 //@route    GET /api/v1/hospitals
 
-<<<<<<< HEAD
-//const { parse } = require("dotenv");
-//const { query } = require("express");
-const Hospital = require("../models/Hospital");
-//const { param } = require("../routes/hospitals");
-=======
->>>>>>> 5545f80 (add VacCenter API)
 
 //@access   Public
 exports.getHospitals = async (req, res, next) => {
@@ -23,18 +16,11 @@ exports.getHospitals = async (req, res, next) => {
     removeFields.forEach(params=>delete reqQuery[params]);
     console.log(reqQuery);
 
-<<<<<<< HEAD
-    //Create query stringnpm 
-    let queryStr=JSON.stringify(reqQuery);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match=>`$${match}`);
-    query=Hospital.find(JSON.parse(queryStr)).populate('appointments');
-=======
     //Create query string
 
     let queryStr = JSON.stringify(reqQuery);
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match=>`$${match}`)
     query = Hospital.find(JSON.parse(queryStr)).populate('appointments');
->>>>>>> 5545f80 (add VacCenter API)
 
     //Select Field
     if(req.query.select){
